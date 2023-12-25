@@ -1,0 +1,108 @@
+﻿@page "/"
+@inject HttpClient Http
+
+<PageTitle>Notes</PageTitle>
+
+<h1>Musical note</h1>
+
+@if (notes == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <DisplaySummary Correct="Correct" Error="Error"></DisplaySummary>
+
+    <div class="my-5" style="font-size: 128px">
+        @if (questionType == "Keysignature")
+        {
+            @answer.Keysignature
+        }
+        else
+        {
+            @answer.Solfege
+        }
+    </div>
+
+    foreach (var note in thisRound)
+    {
+        <div class="btn btn-outline-info btn-lg me-3 rounded-3" @onclick="() => Answer(note)">
+            @if (questionType == "Keysignature")
+            {
+                @note.Solfege
+            }
+            else
+            {
+                @note.Keysignature
+            }
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(previousAnswer))
+    {
+        <div class="border border-1 p-3 rounded-3 mt-3 @(previousAnswerCorrect ? "border-success" : "border-danger")">
+            @previousAnswer
+        </div>
+
+        <div class="btn btn-lg btn-success mt-3" @onclick="GetNotes">
+            Next
+        </div>
+    }
+    
+}
+
+@code {
+    private Note[]? notes;
+    private List<Note> thisRound = new List<Note> { };
+    private Note answer { get; set; }
+    private string questionType { get; set; } = "";
+    private string previousAnswer { get; set; } = "";
+    private int Correct { get; set; } = 0;
+    private int Error { get; set; } = 0;
+    private bool previousAnswerCorrect { get; set; } = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        notes = await Http.GetFromJsonAsync<Note[]>("sample-data/notes.json");
+
+        GetNotes();
+    }
+
+    public void Answer(Note userAnswer)
+    {
+        if (userAnswer.Keysignature == answer.Keysignature)
+        {
+            Correct += 1;
+            previousAnswerCorrect = true;
+        }
+        else
+        {
+            Error += 1;
+            previousAnswerCorrect = false;
+        }
+
+        previousAnswer = $"{answer.Keysignature} is {answer.Solfege}";
+    }
+
+    public void GetNotes()
+    {
+        previousAnswer = "";
+        var previous = answer;
+        var questionTypes = new List<string> { "Keysignature", "Solfege" };
+        var random = new Random();
+
+        do
+        {
+            questionType = questionTypes[random.Next(questionTypes.Count)];
+            thisRound = notes.OrderBy(x => random.Next()).Take(4).ToList();
+            answer = thisRound.OrderBy(x => random.Next()).First();
+        } while (answer == previous);
+    }
+
+    public class Note
+    {
+        public string? Keysignature { get; set; }
+
+        public string? Solfege { get; set; }
+    }
+}

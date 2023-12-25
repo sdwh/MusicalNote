@@ -33,11 +33,11 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-cjfzdJQO\/FRSZS9w493d1pF5nN+4jYsRE2wJ61Q8BXA=",
+      "hash": "sha256-XBBxBZFRTMtUBPG99mZHBo6yrWKrNLI5UDuN\/W2QnuQ=",
       "url": "_framework\/blazor.boot.json"
     },
     {
-      "hash": "sha256-FedjDpfsHX+9nTs8Mwd\/PlwECMXTGv+xEdgyX5W\/L0k=",
+      "hash": "sha256-8vm0S0myarX0nkCj50ttItBzVk25Xn9EgGqkxCIiA5I=",
       "url": "_framework\/BlazorMemory.dll"
     },
     {
@@ -109,6 +109,18 @@
       "url": "_framework\/System.ComponentModel.dll"
     },
     {
+      "hash": "sha256-agHY4oTMEmQLnit7drmeMAK6cJhc\/CI+1oiCd7iEEVs=",
+      "url": "_framework\/System.ComponentModel.Primitives.dll"
+    },
+    {
+      "hash": "sha256-mQ3\/wVnal2O9k7sMCzNHlFyzP5\/eAXj+j6kKbNmf+6U=",
+      "url": "_framework\/System.ComponentModel.TypeConverter.dll"
+    },
+    {
+      "hash": "sha256-IzN9Pv93odA06iMLLtRpYc3mHQSjylDPSfq\/bI9bVHQ=",
+      "url": "_framework\/System.dll"
+    },
+    {
       "hash": "sha256-wSqZHcZv3QfxBLz7KslotSA3p74RZ2Pl0pPpH6Wg7Uw=",
       "url": "_framework\/System.Linq.dll"
     },
@@ -129,7 +141,11 @@
       "url": "_framework\/System.Net.Primitives.dll"
     },
     {
-      "hash": "sha256-O+UeALHy87alukEvxm0GMkue9+mNItZVOZ5+M+ZIudA=",
+      "hash": "sha256-IPstSN1yELaimTh4WSdd0JK\/AmysrbbyW1Jcn4khd+A=",
+      "url": "_framework\/System.ObjectModel.dll"
+    },
+    {
+      "hash": "sha256-V1LS1qMv2RpWscM37RIBgBSbj7jJJoggb6CFkmfopLM=",
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
@@ -145,7 +161,7 @@
       "url": "_framework\/System.Runtime.CompilerServices.Unsafe.dll"
     },
     {
-      "hash": "sha256-dltZYevWVk7RbQITHSip+cHZ1LhbVV8oDSpWPfEiUso=",
+      "hash": "sha256-D6KkE1h4KGdfIJhwCVTiXwMhg37m+DWQSMdmmdN\/z7o=",
       "url": "_framework\/System.Runtime.dll"
     },
     {
@@ -165,7 +181,7 @@
       "url": ".nojekyll"
     },
     {
-      "hash": "sha256-kfXT+\/7PwnK7UBTMq8\/AX20+soj7u1sV\/U1lCtnmSZI=",
+      "hash": "sha256-3oye8cxJJhM0fDa9Yn9QO799cG\/\/8dtJ+Clxsg1wDRM=",
       "url": "css\/app.css"
     },
     {
@@ -237,5 +253,5 @@
       "url": "sample-data\/notes.json"
     }
   ],
-  "version": "wI+ZTx0a"
+  "version": "XvDU72t6"
 };

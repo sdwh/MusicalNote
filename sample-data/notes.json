@@ -1,0 +1,30 @@
+﻿[
+  {
+    "keysignature": "C",
+    "solfege": "DO"
+  },
+  {
+    "keysignature": "D",
+    "solfege": "RE"
+  },
+  {
+    "keysignature": "E",
+    "solfege": "MI"
+  },
+  {
+    "keysignature": "F",
+    "solfege": "FA"
+  },
+  {
+    "keysignature": "G",
+    "solfege": "SOL"
+  },
+  {
+    "keysignature": "A",
+    "solfege": "LA"
+  },
+  {
+    "keysignature": "B",
+    "solfege": "TI"
+  }
+]

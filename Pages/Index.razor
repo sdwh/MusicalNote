@@ -79,14 +79,15 @@ else
         {
             Correct += 1;
             previousAnswerCorrect = true;
+            GetNotes();
         }
         else
         {
             Error += 1;
             previousAnswerCorrect = false;
+            previousAnswer = $"{answer.Keysignature} is {answer.Solfege}";
         }
 
-        previousAnswer = $"{answer.Keysignature} is {answer.Solfege}";
     }
 
     public void GetNotes()

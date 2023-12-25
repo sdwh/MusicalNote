@@ -1,6 +1,7 @@
 ﻿<div>
     <span>🎵 @Correct</span> /
-    <span>❌ @Error</span>
+    <span>❌ @Error</span> / 
+    <span>⌚ @TimeElapsed.TotalSeconds</span>
 </div>
 
 @code {
@@ -9,4 +10,7 @@
 
     [Parameter]
     public int Error { get; set; }
+
+    [Parameter]
+    public TimeSpan TimeElapsed { get; set; }
 }

@@ -1,30 +1,117 @@
 ﻿[
   {
     "keysignature": "C",
-    "solfege": "DO"
+    "solfege": "DO",
+    "group": 1
   },
   {
     "keysignature": "D",
-    "solfege": "RE"
+    "solfege": "RE",
+    "group": 1
   },
   {
     "keysignature": "E",
-    "solfege": "MI"
+    "solfege": "MI",
+    "group": 1
   },
   {
     "keysignature": "F",
-    "solfege": "FA"
+    "solfege": "FA",
+    "group": 1
   },
   {
     "keysignature": "G",
-    "solfege": "SOL"
+    "solfege": "SOL",
+    "group": 1
   },
   {
     "keysignature": "A",
-    "solfege": "LA"
+    "solfege": "LA",
+    "group": 1
   },
   {
     "keysignature": "B",
-    "solfege": "TI"
+    "solfege": "TI",
+    "group": 1
+  },
+  {
+    "keysignature": "A1",
+    "solfege": "LA",
+    "group": 2
+  },
+  {
+    "keysignature": "A2",
+    "solfege": "LA",
+    "group": 2
+  },
+  {
+    "keysignature": "B1",
+    "solfege": "TI",
+    "group": 2
+  },
+  {
+    "keysignature": "B2",
+    "solfege": "TI",
+    "group": 2
+  },
+  {
+    "keysignature": "C",
+    "solfege": "DO",
+    "group": 2
+  },
+  {
+    "keysignature": "C1",
+    "solfege": "DO",
+    "group": 2
+  },
+  {
+    "keysignature": "C2",
+    "solfege": "DO",
+    "group": 2
+  },
+  {
+    "keysignature": "D",
+    "solfege": "RE",
+    "group": 2
+  },
+  {
+    "keysignature": "D1",
+    "solfege": "RE",
+    "group": 2
+  },
+  {
+    "keysignature": "D2",
+    "solfege": "RE",
+    "group": 2
+  },
+  {
+    "keysignature": "E1",
+    "solfege": "MI",
+    "group": 2
+  },
+  {
+    "keysignature": "E2",
+    "solfege": "MI",
+    "group": 2
+  },
+  {
+    "keysignature": "F1",
+    "solfege": "FA",
+    "group": 2
+  },
+  {
+    "keysignature": "F2",
+    "solfege": "FA",
+    "group": 2
+  },
+  {
+    "keysignature": "G1",
+    "solfege": "SOL",
+    "group": 2
+  },
+  {
+    "keysignature": "G2",
+    "solfege": "SOL",
+    "group": 2
   }
 ]

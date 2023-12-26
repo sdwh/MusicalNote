@@ -14,24 +14,47 @@ else
     <DisplaySummary Correct="Correct" Error="Error" TimeElapsed="timeElapsed"></DisplaySummary>
 
     <div class="my-5" style="font-size: 128px">
-        @if (questionType == "Keysignature")
+        @if (QuesGroup == 1 && questionType == "Keysignature")
         {
             @answer.Keysignature
         }
-        else
+        else if (QuesGroup == 1 && questionType == "Solfege")
         {
             @answer.Solfege
+        }
+        else if (QuesGroup == 2 && questionType == "Pitch2Image")
+        {
+            @answer.Keysignature
+        }
+        else if (QuesGroup == 2 && questionType == "Image2Pitch")
+        {
+            <img src="note/@(answer.Keysignature).svg"/>
+        }
+        else
+        {
+            <div class="btn btn-lg btn-success mt-3" @onclick="GetNotes">
+                Next
+            </div>
         }
     </div>
 
     foreach (var note in thisRound)
     {
-        <div class="btn btn-outline-info btn-lg me-3 rounded-3" @onclick="() => Answer(note)">
-            @if (questionType == "Keysignature")
+        <div class="btn btn-outline-info btn-lg me-3 rounded-3 @(previousAnswer == "specialSituation" ? "d-none" : "")" 
+            @onclick="() => Answer(note)">
+            @if (QuesGroup == 1 && questionType == "Keysignature")
             {
                 @note.Solfege
             }
-            else
+            else if (QuesGroup == 1 && questionType == "Solfege")
+            {
+                @note.Keysignature
+            }
+            else if (QuesGroup == 2 && questionType == "Pitch2Image")
+            {
+                <img src="note/@(note.Keysignature).svg" />
+            }
+            else if (QuesGroup == 2 && questionType == "Image2Pitch")
             {
                 @note.Keysignature
             }
@@ -41,7 +64,21 @@ else
     @if (!string.IsNullOrEmpty(previousAnswer))
     {
         <div class="border border-1 p-3 rounded-3 mt-3 @(previousAnswerCorrect ? "border-success" : "border-danger")">
-            @previousAnswer
+
+            @if (previousAnswer != "specialSituation")
+            {
+                @previousAnswer
+            }
+            else
+            {
+                foreach (var note in thisRound)
+                {
+                    <div class="d-inline-block">
+                        <span class="fw-bolder fs-5">@note.Keysignature</span> <img src="note/@(note.Keysignature).svg" />
+                    </div>
+                    
+                }
+            }
         </div>
 
         <div class="btn btn-lg btn-success mt-3" @onclick="GetNotes">
@@ -62,6 +99,7 @@ else
     private bool previousAnswerCorrect { get; set; } = true;
     private TimeSpan timeElapsed;
     private System.Timers.Timer timer;
+    private int QuesGroup { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -73,9 +111,10 @@ else
         SetupTimer();
     }
 
-    public void Answer(Note userAnswer)
+    public async void Answer(Note userAnswer)
     {
-        if (userAnswer.Keysignature == answer.Keysignature)
+
+        if (userAnswer == answer)
         {
             Correct += 1;
             previousAnswerCorrect = true;
@@ -85,7 +124,18 @@ else
         {
             Error += 1;
             previousAnswerCorrect = false;
-            previousAnswer = $"{answer.Keysignature} is {answer.Solfege}";
+            if (QuesGroup == 1)
+            {
+                previousAnswer = $"{answer.Keysignature} is {answer.Solfege}";
+            }
+            else if (QuesGroup == 2 && questionType == "Image2Pitch")
+            {
+                previousAnswer = $"This Note is {answer.Keysignature}";
+            }
+            else if (QuesGroup == 2 && questionType == "Pitch2Image")
+            {
+                previousAnswer = "specialSituation";
+            }
         }
 
     }
@@ -94,20 +144,32 @@ else
     {
         previousAnswer = "";
         var previous = answer;
-        var questionTypes = new List<string> { "Keysignature", "Solfege" };
         var random = new Random();
+        QuesGroup = random.Next(1, 3);
 
-        do
+        if (QuesGroup == 1)
         {
+            var questionTypes = new List<string> { "Keysignature", "Solfege" };
+            do
+            {
+                questionType = questionTypes[random.Next(questionTypes.Count)];
+                thisRound = notes.Where(i => i.Group == 1).OrderBy(x => random.Next()).Take(4).ToList();
+                answer = thisRound.OrderBy(x => random.Next()).First();
+            } while (answer == previous);
+        }
+        else if (QuesGroup == 2)
+        {
+            var questionTypes = new List<string> { "Pitch2Image", "Image2Pitch" };
             questionType = questionTypes[random.Next(questionTypes.Count)];
-            thisRound = notes.OrderBy(x => random.Next()).Take(4).ToList();
+            thisRound = notes.Where(i => i.Group == 2).OrderBy(x => random.Next()).Take(4).ToList();
             answer = thisRound.OrderBy(x => random.Next()).First();
-        } while (answer == previous);
+        }
+
     }
 
     private void SetupTimer()
     {
-        timer = new System.Timers.Timer(1000); // Fires every second
+        timer = new System.Timers.Timer(300); // Fires every second
         timer.Elapsed += TimerElapsed;
         timer.AutoReset = true;
         timer.Enabled = true;
@@ -129,5 +191,7 @@ else
         public string? Keysignature { get; set; }
 
         public string? Solfege { get; set; }
+
+        public int Group { get; set; }
     }
 }

@@ -33,11 +33,11 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-kc5Y\/ysRshrmQ6nbiw+7zJsPG9gAtlIOWtxePoKr4IA=",
+      "hash": "sha256-WpNaActkWScuv7bkRKTj\/6bEXD+zm\/tN9rkkjcVttvU=",
       "url": "_framework\/blazor.boot.json"
     },
     {
-      "hash": "sha256-6Py239IngDGCsvI35qcQZ1App2VdJLW\/EMwOcLiCimw=",
+      "hash": "sha256-\/zbkbJ7D3v9Qhw0SQfHN12L81SLuGOR5rG8ISnMP6L4=",
       "url": "_framework\/BlazorMemory.dll"
     },
     {
@@ -121,7 +121,7 @@
       "url": "_framework\/System.dll"
     },
     {
-      "hash": "sha256-9JTuv\/kVnkJxCPnV4WOJ8qdXXBSsqi4Fi2fnzrzn2ZM=",
+      "hash": "sha256-iVTkFj8YkahFGtZ3RizdPxe5B+sDmpMg7RmhJv7G7DM=",
       "url": "_framework\/System.Linq.dll"
     },
     {
@@ -161,7 +161,7 @@
       "url": "_framework\/System.Runtime.CompilerServices.Unsafe.dll"
     },
     {
-      "hash": "sha256-gBlQ8ba5kCbhxHTrUtFHzY6yR1XMf5ya31A7BDqBX5Y=",
+      "hash": "sha256-njcGxsDhZiG7WR1vhcIGHX+XKr3TIyacRpV+vakr3Ag=",
       "url": "_framework\/System.Runtime.dll"
     },
     {
@@ -329,5 +329,5 @@
       "url": "sample-data\/notes.json"
     }
   ],
-  "version": "qiTKFeTo"
+  "version": "+t+iMS86"
 };

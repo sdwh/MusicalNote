@@ -1,0 +1,58 @@
+﻿@page "/Notes"
+@inject HttpClient Http
+
+<PageTitle>Notes</PageTitle>
+
+<h1>Musical note</h1>
+
+<a href="/" class="btn btn-primary my-3">Practice</a>
+
+@if (notes == null)
+{
+    <p><em>Musical Note Training Loading.</em></p>
+}
+else
+{
+    foreach (var group in notes.Where(i => i.Group == 2).OrderBy(i => i.Absolute).GroupBy(i => i.Keysignature))
+    {
+        <div>
+            <div>@group.Key</div>
+            @foreach (var img in group)
+            {
+            <img src="note/@(img.Image).svg" />    
+            }
+        </div>
+    }
+}
+
+<div class="mt-5 text-secondary">Last Update Date: 2023-12-31</div>
+
+@code {
+    private Note[]? notes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        notes = await Http.GetFromJsonAsync<Note[]>("sample-data/notes.json");
+    }
+
+        public class Note
+    {
+        public string? Keysignature { get; set; }
+
+        public string? Solfege { get; set; }
+
+        public int Group { get; set; }
+
+        public string? Absolute { get; set; }
+
+        public string? Image { get; set; }
+
+        public string? Nextk { get; set; }
+
+        public string? Nexts { get; set; }
+
+        public string? Prevk { get; set; }
+
+        public string? Prevs { get; set; }
+    }
+}

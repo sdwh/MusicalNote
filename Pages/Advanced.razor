@@ -1,4 +1,4 @@
-﻿@page "/Basic"
+﻿@page "/Advanced"
 @inject HttpClient Http
 
 <PageTitle>Notes</PageTitle>
@@ -127,7 +127,7 @@ else
     <NavLink href="Menu" class="btn btn-info my-3">Menu</NavLink>
 </div>
 
-<div class="mt-5 text-secondary">Last Update Date: 2024-01-01</div>
+<div class="mt-5 text-secondary">Last Update Date: 2024-01-06</div>
 
 @code {
     private Note[]? notes;
@@ -191,7 +191,7 @@ else
         previousAnswer = "";
         var previous = answer;
         var random = new Random();
-        QuesGroup = random.Next(1, 4);
+        QuesGroup = 2;
 
         if (QuesGroup == 1)
         {

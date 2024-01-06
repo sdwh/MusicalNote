@@ -151,6 +151,7 @@ else
                              .OrderBy(x => random.Next()).Take(1).First();
 
         thisRound.Add(answer);
+        thisRound = thisRound.OrderBy(x => random.Next()).ToList();
 
     }
 

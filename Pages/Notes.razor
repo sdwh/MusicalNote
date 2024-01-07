@@ -5,27 +5,51 @@
 
 <h1 class="fw-bolder">Learning Mode</h1>
 
-<NavLink href="" class="btn btn-info my-3">Menu</NavLink>
-
 @if (notes == null)
 {
     <p><em>Musical Note Training Loading.</em></p>
 }
 else
 {
+    <NavLink href="" class="btn btn-info my-3">Menu</NavLink>
     foreach (var group in notes.Where(i => i.Group == 2).OrderBy(i => i.Absolute).GroupBy(i => i.Keysignature))
     {
         <div>
-            <div>@group.Key</div>
+            <div class="bg-primary text-white fs-5 rounded-2">Bass Clef | @group.Key</div>
             @foreach (var img in group)
             {
             <img src="note/@(img.Image).svg" />    
             }
         </div>
     }
+
+    <NavLink href="" class="btn btn-info my-3">Menu</NavLink>
+    foreach (var group in notes.Where(i => i.Group == 6).OrderBy(i => i.Absolute).GroupBy(i => i.Keysignature))
+    {
+        <div>
+            <div class="bg-success text-white fs-5  rounded-2">Tenor Clef | @group.Key</div>
+            @foreach (var img in group)
+            {
+                <img src="note/@(img.Image).svg" />
+            }
+        </div>
+    }
+
+    <NavLink href="" class="btn btn-info my-3">Menu</NavLink>
+    foreach (var group in notes.Where(i => i.Group == 5).OrderBy(i => i.Absolute).GroupBy(i => i.Keysignature))
+    {
+        <div>
+            <div class="bg-danger text-white fs-5  rounded-2">Treble Clef | @group.Key</div>
+            @foreach (var img in group)
+            {
+                <img src="note/@(img.Image).svg" />
+            }
+        </div>
+    }
+    <NavLink href="" class="btn btn-info my-3">Menu</NavLink>
 }
 
-<div class="mt-5 text-secondary">Last Update Date: 2023-12-31</div>
+<div class="mt-5 text-secondary">Last Update Date: 2024-01-07</div>
 
 @code {
     private Note[]? notes;

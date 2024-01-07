@@ -1,0 +1,205 @@
+﻿@page "/AllClef"
+@inject HttpClient Http
+
+<PageTitle>Musical Note</PageTitle>
+
+<h1 class="fw-bolder">Bass &amp; Tenor &amp; Treble</h1>
+
+@if (notes == null)
+{
+    <p><em>Musical Note Training Loading.</em></p>
+}
+else
+{
+    <DisplaySummary Correct="Correct" Error="Error" TimeElapsed="timeElapsed"></DisplaySummary>
+
+    <div class="my-3" style="font-size: 128px">
+        @if (questionType == "Pitch2Image")
+        {
+            @answer.Keysignature
+        }
+        else if (questionType == "Image2Pitch")
+        {
+            <img src="note/@(answer.Image).svg"/>
+        }
+        else
+        {
+            <div class="btn btn-lg btn-success mt-3" @onclick="GetNotes">
+                Next
+            </div>
+        }
+    </div>
+
+    <div class="d-flex justify-content-center mx-auto flex-wrap">
+    @foreach (var note in thisRound)
+    {
+        <div class="btn btn-outline-info btn-lg me-3 rounded-3 mb-2 mb-lg-0 @(previousAnswer == "specialSituation" ? "d-none" : "")" 
+            @onclick="() => Answer(note)">
+            @if (questionType == "Pitch2Image")
+            {
+                <img src="note/@(note.Image).svg" />
+            }
+            else if (questionType == "Image2Pitch")
+            {
+                @note.Keysignature
+            }
+        </div>
+    }
+    </div>
+
+    @if (!string.IsNullOrEmpty(previousAnswer))
+    {
+        <div class="border border-1 p-3 rounded-3 mt-3 @(previousAnswerCorrect ? "border-success" : "border-danger")">
+
+            @if (previousAnswer != "specialSituation")
+            {
+                @previousAnswer
+            }
+            else
+            {
+                foreach (var note in thisRound)
+                {
+                    <div class="d-inline-block">
+                        <span class="fw-bolder fs-5">@note.Keysignature</span> <img src="note/@(note.Image).svg" />
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="btn btn-lg btn-success mt-3" @onclick="GetNotes">
+            Next
+        </div>
+    }
+    
+}
+
+<div>
+    <NavLink href="" class="btn btn-info my-3">Menu</NavLink>
+</div>
+
+<div class="mt-5 text-secondary">Last Update Date: 2024-01-07</div>
+
+@code {
+    private Note[]? notes;
+    private List<Note> thisRound = new List<Note> { };
+    private Note answer { get; set; }
+    private string questionType { get; set; } = "";
+    private string previousAnswer { get; set; } = "";
+    private int Correct { get; set; } = 0;
+    private int Error { get; set; } = 0;
+    private bool previousAnswerCorrect { get; set; } = true;
+    private TimeSpan timeElapsed;
+    private System.Timers.Timer timer;
+    private int QuesGroup { get; set; }
+    private LinkNote QuesType3Setting { get; set; } = new LinkNote { };
+
+    protected override async Task OnInitializedAsync()
+    {
+        notes = await Http.GetFromJsonAsync<Note[]>("sample-data/notes.json");
+
+        GetNotes();
+
+        timeElapsed = TimeSpan.Zero;
+        SetupTimer();
+    }
+
+    public async void Answer(Note userAnswer)
+    {
+
+        if (userAnswer == answer)
+        {
+            Correct += 1;
+            previousAnswerCorrect = true;
+            GetNotes();
+        }
+        else
+        {
+            Error += 1;
+            previousAnswerCorrect = false;
+            if (questionType == "Image2Pitch")
+            {
+                previousAnswer = $"This Note is {answer.Keysignature}";
+            }
+            else if (questionType == "Pitch2Image")
+            {
+                previousAnswer = "specialSituation";
+            }
+        }
+
+    }
+
+    public void GetNotes()
+    {
+        previousAnswer = "";
+        var previous = answer;
+        var random = new Random();
+        var randValue = random.Next(101);
+        QuesGroup = (randValue >= 0 && randValue <= 33) ? 2 : ((randValue >= 34 && randValue <= 69) ? 5 : 6);
+
+        var questionTypes = new List<string> { "Pitch2Image", "Image2Pitch" };
+        string answerChar = "ABCDEFG"[new Random().Next(7)].ToString();
+
+        questionType = questionTypes[random.Next(questionTypes.Count)];
+
+
+        thisRound = notes.Where(i => i.Group == QuesGroup)
+                             .Where(i => i.Keysignature != answerChar)
+                             .OrderBy(x => random.Next()).DistinctBy(i => i.Keysignature).Take(3).ToList();
+
+        answer = notes.Where(i => i.Group == QuesGroup)
+                             .Where(i => i.Keysignature == answerChar)
+                             .OrderBy(x => random.Next()).Take(1).First();
+
+        thisRound.Add(answer);
+        thisRound = thisRound.OrderBy(x => random.Next()).ToList();
+
+    }
+
+    private void SetupTimer()
+    {
+        timer = new System.Timers.Timer(1000); // Fires every second
+        timer.Elapsed += TimerElapsed;
+        timer.AutoReset = true;
+        timer.Enabled = true;
+    }
+
+    private void TimerElapsed(Object source, System.Timers.ElapsedEventArgs e)
+    {
+        timeElapsed = timeElapsed.Add(TimeSpan.FromSeconds(1));
+        InvokeAsync(StateHasChanged); // Re-render the component
+    }
+
+    public void Dispose()
+    {
+        timer?.Dispose();
+    }
+
+    public class Note
+    {
+        public string? Keysignature { get; set; }
+
+        public string? Solfege { get; set; }
+
+        public int Group { get; set; }
+
+        public string? Absolute { get; set; }
+
+        public string? Image { get; set; }
+
+        public string? Nextk { get; set; }
+
+        public string? Nexts { get; set; }
+
+        public string? Prevk { get; set; }
+
+        public string? Prevs { get; set; }
+    }
+
+    public class LinkNote
+    {
+        public string? QuestionSide { get; set; }
+        public string? Direction { get; set; }
+        public string? AnswerSide { get; set; }
+
+    }
+}

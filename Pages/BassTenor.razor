@@ -1,9 +1,9 @@
-﻿@page "/Advanced"
+﻿@page "/BassTenor"
 @inject HttpClient Http
 
 <PageTitle>Musical Note</PageTitle>
 
-<h1 class="fw-bolder">Advanced Mode</h1>
+<h1 class="fw-bolder">Bass And Tenor Clef</h1>
 
 @if (notes == null)
 {
@@ -13,14 +13,14 @@ else
 {
     <DisplaySummary Correct="Correct" Error="Error" TimeElapsed="timeElapsed"></DisplaySummary>
 
-    <div class="my-5" style="font-size: 128px">
+    <div class="my-3" style="font-size: 128px">
         @if (questionType == "Pitch2Image")
         {
             @answer.Keysignature
         }
         else if (questionType == "Image2Pitch")
         {
-            <img src="note/@(answer.Image).svg"/>
+            <img src="note/@(answer.Image).svg" />
         }
         else
         {
@@ -31,20 +31,20 @@ else
     </div>
 
     <div class="d-flex justify-content-center mx-auto flex-wrap">
-    @foreach (var note in thisRound)
-    {
-        <div class="btn btn-outline-info btn-lg me-3 rounded-3 mb-2 mb-lg-0 @(previousAnswer == "specialSituation" ? "d-none" : "")" 
-            @onclick="() => Answer(note)">
-            @if (questionType == "Pitch2Image")
-            {
-                <img src="note/@(note.Image).svg" />
-            }
-            else if (questionType == "Image2Pitch")
-            {
-                @note.Keysignature
-            }
-        </div>
-    }
+        @foreach (var note in thisRound)
+        {
+            <div class="btn btn-outline-info btn-lg me-3 rounded-3 mb-2 mb-lg-0 @(previousAnswer == "specialSituation" ? "d-none" : "")"
+                 @onclick="() => Answer(note)">
+                @if (questionType == "Pitch2Image")
+                {
+                    <img src="note/@(note.Image).svg" />
+                }
+                else if (questionType == "Image2Pitch")
+                {
+                    @note.Keysignature
+                }
+            </div>
+        }
     </div>
 
     @if (!string.IsNullOrEmpty(previousAnswer))
@@ -70,14 +70,14 @@ else
             Next
         </div>
     }
-    
+
 }
 
 <div>
     <NavLink href="" class="btn btn-info my-3">Menu</NavLink>
 </div>
 
-<div class="mt-5 text-secondary">Last Update Date: 2024-01-06</div>
+<div class="mt-5 text-secondary">Last Update Date: 2024-01-07</div>
 
 @code {
     private Note[]? notes;
@@ -134,7 +134,7 @@ else
         var previous = answer;
         var random = new Random();
         var randValue = random.Next(101);
-        QuesGroup = (randValue >= 0 && randValue <= 49) ? 2 : 5;
+        QuesGroup = (randValue >= 0 && randValue <= 49) ? 2 : 6;
 
         var questionTypes = new List<string> { "Pitch2Image", "Image2Pitch" };
         string answerChar = "ABCDEFG"[new Random().Next(7)].ToString();

@@ -1,9 +1,9 @@
-﻿@page "/Intermediate"
+﻿@page "/Bass"
 @inject HttpClient Http
 
 <PageTitle>Musical Note</PageTitle>
 
-<h1 class="fw-bolder">Intermediate Mode</h1>
+<h1 class="fw-bolder">Bass Clef</h1>
 
 @if (notes == null)
 {
@@ -13,7 +13,7 @@ else
 {
     <DisplaySummary Correct="Correct" Error="Error" TimeElapsed="timeElapsed"></DisplaySummary>
 
-    <div class="my-5" style="font-size: 128px">
+    <div class="my-3" style="font-size: 128px">
         @if (QuesGroup == 1 && questionType == "Keysignature")
         {
             @answer.Keysignature

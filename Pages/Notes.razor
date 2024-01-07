@@ -11,7 +11,7 @@
 }
 else
 {
-    <NavLink href="" class="btn btn-info my-3">Menu</NavLink>
+    <NavLink href="" class="btn btn-info my-3">☰ Menu</NavLink>
     foreach (var group in notes.Where(i => i.Group == 2).OrderBy(i => i.Absolute).GroupBy(i => i.Keysignature))
     {
         <div>
@@ -23,7 +23,7 @@ else
         </div>
     }
 
-    <NavLink href="" class="btn btn-info my-3">Menu</NavLink>
+    <NavLink href="" class="btn btn-info my-3">☰ Menu</NavLink>
     foreach (var group in notes.Where(i => i.Group == 6).OrderBy(i => i.Absolute).GroupBy(i => i.Keysignature))
     {
         <div>
@@ -35,7 +35,7 @@ else
         </div>
     }
 
-    <NavLink href="" class="btn btn-info my-3">Menu</NavLink>
+    <NavLink href="" class="btn btn-info my-3">☰ Menu</NavLink>
     foreach (var group in notes.Where(i => i.Group == 5).OrderBy(i => i.Absolute).GroupBy(i => i.Keysignature))
     {
         <div>
@@ -46,7 +46,7 @@ else
             }
         </div>
     }
-    <NavLink href="" class="btn btn-info my-3">Menu</NavLink>
+    <NavLink href="" class="btn btn-info my-3">☰ Menu</NavLink>
 }
 
 <div class="mt-5 text-secondary">Last Update Date: 2024-01-07</div>

@@ -404,5 +404,166 @@
     "absolute": "g3",
     "image": "G-LG3",
     "group": 5
+  },
+  {
+    "keysignature": "A",
+    "solfege": "LA",
+    "absolute": "a",
+    "image": "T-A",
+    "group": 6
+  },
+  {
+    "keysignature": "A",
+    "solfege": "LA",
+    "absolute": "a1",
+    "image": "T-A1",
+    "group": 6
+  },
+  {
+    "keysignature": "A",
+    "solfege": "LA",
+    "absolute": "a2",
+    "image": "T-A2",
+    "group": 6
+  },
+  {
+    "keysignature": "B",
+    "solfege": "TI",
+    "absolute": "b",
+    "image": "T-B",
+    "group": 6
+  },
+  {
+    "keysignature": "B",
+    "solfege": "TI",
+    "absolute": "b1",
+    "image": "T-B1",
+    "group": 6
+  },
+  {
+    "keysignature": "B",
+    "solfege": "TI",
+    "absolute": "b2",
+    "image": "T-B2",
+    "group": 6
+  },
+  {
+    "keysignature": "C",
+    "solfege": "DO",
+    "absolute": "c",
+    "image": "T-C",
+    "group": 6
+  },
+  {
+    "keysignature": "C",
+    "solfege": "DO",
+    "absolute": "c1",
+    "image": "T-C1",
+    "group": 6
+  },
+  {
+    "keysignature": "D",
+    "solfege": "RE",
+    "absolute": "d",
+    "image": "T-D",
+    "group": 6
+  },
+  {
+    "keysignature": "D",
+    "solfege": "RE",
+    "absolute": "d1",
+    "image": "T-D1",
+    "group": 6
+  },
+  {
+    "keysignature": "E",
+    "solfege": "MI",
+    "absolute": "e",
+    "image": "T-E",
+    "group": 6
+  },
+  {
+    "keysignature": "E",
+    "solfege": "MI",
+    "absolute": "e1",
+    "image": "T-E1",
+    "group": 6
+  },
+  {
+    "keysignature": "E",
+    "solfege": "MI",
+    "absolute": "e2",
+    "image": "T-E2",
+    "group": 6
+  },
+  {
+    "keysignature": "F",
+    "solfege": "FA",
+    "absolute": "f",
+    "image": "T-F",
+    "group": 6
+  },
+  {
+    "keysignature": "F",
+    "solfege": "FA",
+    "absolute": "f1",
+    "image": "T-F1",
+    "group": 6
+  },
+  {
+    "keysignature": "F",
+    "solfege": "FA",
+    "absolute": "f2",
+    "image": "T-F2",
+    "group": 6
+  },
+  {
+    "keysignature": "G",
+    "solfege": "SOL",
+    "absolute": "g",
+    "image": "T-G",
+    "group": 6
+  },
+  {
+    "keysignature": "G",
+    "solfege": "SOL",
+    "absolute": "g1",
+    "image": "T-G1",
+    "group": 6
+  },
+  {
+    "keysignature": "G",
+    "solfege": "SOL",
+    "absolute": "g2",
+    "image": "T-G2",
+    "group": 6
+  },
+  {
+    "keysignature": "C",
+    "solfege": "DO",
+    "absolute": "uc1",
+    "image": "T-UC1",
+    "group": 6
+  },
+  {
+    "keysignature": "D",
+    "solfege": "RE",
+    "absolute": "ud1",
+    "image": "T-UD1",
+    "group": 6
+  },
+  {
+    "keysignature": "E",
+    "solfege": "MI",
+    "absolute": "ue1",
+    "image": "T-UE1",
+    "group": 6
+  },
+  {
+    "keysignature": "F",
+    "solfege": "FA",
+    "absolute": "uf1",
+    "image": "T-UF1",
+    "group": 6
   }
 ]

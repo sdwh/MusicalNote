@@ -13,34 +13,16 @@ else
 {
     <DisplaySummary Correct="Correct" Error="Error" TimeElapsed="timeElapsed"></DisplaySummary>
 
+    <KSSwitch KSMode=KSMode KSModeChanged="@OnKSModeChanged"></KSSwitch>
+
     <div class="my-3" style="font-size: 128px">
-        @if (QuesGroup == 1 && questionType == "Keysignature")
+        @if (QuesGroup == 2 && questionType == "Pitch2Image")
         {
-            @answer.Keysignature
-        }
-        else if (QuesGroup == 1 && questionType == "Solfege")
-        {
-            @answer.Solfege
-        }
-        else if (QuesGroup == 2 && questionType == "Pitch2Image")
-        {
-            @answer.Keysignature
+            @(KSMode ? answer.Solfege : answer.Keysignature)
         }
         else if (QuesGroup == 2 && questionType == "Image2Pitch")
         {
-            <img src="note/@(answer.Image).svg"/>
-        }
-        else if (QuesGroup == 3)
-        {
-            @if (QuesType3Setting.QuestionSide == "Keysignature")
-            {
-                @answer.Keysignature
-            }
-            else
-            {
-                @answer.Solfege
-            }
-            <div style="font-size:32px">@(QuesType3Setting.Direction)音</div>
+            <img src="note/@(answer.Image).svg" />
         }
         else
         {
@@ -55,43 +37,13 @@ else
     {
         <div class="btn btn-outline-info btn-lg me-3 rounded-3 mb-2 mb-lg-0 @(previousAnswer == "specialSituation" ? "d-none" : "")" 
             @onclick="() => Answer(note)">
-            @if (QuesGroup == 1 && questionType == "Keysignature")
+            @if (QuesGroup == 2 && questionType == "Pitch2Image")
             {
-                @note.Solfege
-            }
-            else if (QuesGroup == 1 && questionType == "Solfege")
-            {
-                @note.Keysignature
-            }
-            else if (QuesGroup == 2 && questionType == "Pitch2Image")
-            {
-                <img src="note/@(note.Image).svg" />
+            <img src="note/@(note.Image).svg" />
             }
             else if (QuesGroup == 2 && questionType == "Image2Pitch")
             {
-                @note.Keysignature
-            }
-            else if (QuesGroup == 3 && QuesType3Setting.Direction == "前一個")
-            {
-                if (QuesType3Setting.AnswerSide == "Keysignature")
-                {
-                    @note.Prevk
-                }
-                else
-                {
-                    @note.Prevs
-                }
-            }
-            else if (QuesGroup == 3 && QuesType3Setting.Direction == "下一個")
-            {
-                if (QuesType3Setting.AnswerSide == "Keysignature")
-                {
-                    @note.Nextk
-                }
-                else
-                {
-                    @note.Nexts
-                }
+                    @(KSMode ? note.Solfege : note.Keysignature)
             }
         </div>
     }
@@ -110,7 +62,7 @@ else
                 foreach (var note in thisRound)
                 {
                     <div class="d-inline-block">
-                        <span class="fw-bolder fs-5">@note.Keysignature</span> <img src="note/@(note.Image).svg" />
+                        <span class="fw-bolder fs-5">@(KSMode ? note.Solfege : note.Keysignature)</span> <img src="note/@(note.Image).svg" />
                     </div>
                 }
             }
@@ -123,7 +75,7 @@ else
     
 }
 
-<div class="mt-5 text-secondary">Last Update Date: 2024-01-06</div>
+<div class="mt-5 text-secondary">Last Update Date: 2024-01-21</div>
 
 @code {
     private Note[]? notes;
@@ -138,6 +90,7 @@ else
     private System.Timers.Timer timer;
     private int QuesGroup { get; set; }
     private LinkNote QuesType3Setting { get; set; } = new LinkNote { };
+    private bool KSMode { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -162,21 +115,14 @@ else
         {
             Error += 1;
             previousAnswerCorrect = false;
-            if (QuesGroup == 1)
+            if (QuesGroup == 2 && questionType == "Image2Pitch")
             {
-                previousAnswer = $"{answer.Keysignature} is {answer.Solfege}";
-            }
-            else if (QuesGroup == 2 && questionType == "Image2Pitch")
-            {
-                previousAnswer = $"This Note is {answer.Keysignature}";
+                var correctAnswer = KSMode ? answer.Solfege : answer.Keysignature;
+                previousAnswer = $"This Note is {correctAnswer}";
             }
             else if (QuesGroup == 2 && questionType == "Pitch2Image")
             {
                 previousAnswer = "specialSituation";
-            }
-            else if (QuesGroup == 3)
-            {
-                previousAnswer = $"{answer.Prevk} ({answer.Prevs}) ⬅ {answer.Keysignature} ({answer.Solfege}) ➡ {answer.Nextk} ({answer.Nexts})";
             }
         }
 
@@ -189,48 +135,22 @@ else
         var random = new Random();
         QuesGroup = 2;
 
-        if (QuesGroup == 1)
-        {
-            var questionTypes = new List<string> { "Keysignature", "Solfege" };
-            do
-            {
-                questionType = questionTypes[random.Next(questionTypes.Count)];
-                thisRound = notes.Where(i => i.Group == 1).OrderBy(x => random.Next()).Take(4).ToList();
-                answer = thisRound.OrderBy(x => random.Next()).First();
-            } while (answer == previous);
-        }
-        else if (QuesGroup == 2)
-        {
-            var questionTypes = new List<string> { "Pitch2Image", "Image2Pitch" };
-            string answerChar = "ABCDEFG"[new Random().Next(7)].ToString();
+        var questionTypes = new List<string> { "Pitch2Image", "Image2Pitch" };
+        string answerChar = "ABCDEFG"[new Random().Next(7)].ToString();
 
-            questionType = questionTypes[random.Next(questionTypes.Count)];
+        questionType = questionTypes[random.Next(questionTypes.Count)];
 
 
-            thisRound = notes.Where(i => i.Group == 2)
-                                 .Where(i => i.Keysignature != answerChar)
-                                 .OrderBy(x => random.Next()).DistinctBy(i => i.Keysignature).Take(3).ToList();
+        thisRound = notes.Where(i => i.Group == 2)
+                             .Where(i => i.Keysignature != answerChar)
+                             .OrderBy(x => random.Next()).DistinctBy(i => i.Keysignature).Take(3).ToList();
 
-            answer = notes.Where(i => i.Group == 2)
-                                 .Where(i => i.Keysignature == answerChar)
-                                 .OrderBy(x => random.Next()).Take(1).First();
+        answer = notes.Where(i => i.Group == 2)
+                             .Where(i => i.Keysignature == answerChar)
+                             .OrderBy(x => random.Next()).Take(1).First();
 
-            thisRound.Add(answer);
-            thisRound = thisRound.OrderBy(x => random.Next()).ToList();
-        }
-        else if (QuesGroup == 3)
-        {
-            var questionSideChoose =  new List<string> { "Keysignature", "Solfege" };
-            var directionChoose = new List<string> { "前一個", "下一個" };
-
-            QuesType3Setting.QuestionSide = questionSideChoose[random.Next(questionSideChoose.Count)];
-            QuesType3Setting.Direction = directionChoose[random.Next(questionSideChoose.Count)];
-            QuesType3Setting.AnswerSide = questionSideChoose[random.Next(questionSideChoose.Count)];
-
-            thisRound = notes.Where(i => i.Group == 3).OrderBy(x => random.Next()).Take(4).ToList();
-            answer = thisRound.OrderBy(x => random.Next()).First();
-        }
-
+        thisRound.Add(answer);
+        thisRound = thisRound.OrderBy(x => random.Next()).ToList();
     }
 
     private void SetupTimer()
@@ -279,5 +199,10 @@ else
         public string? Direction { get; set; }
         public string? AnswerSide { get; set; }
 
+    }
+
+    private void OnKSModeChanged(bool newValue)
+    {
+        KSMode = newValue;
     }
 }

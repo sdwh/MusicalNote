@@ -12,11 +12,12 @@
 else
 {
     <DisplaySummary Correct="Correct" Error="Error" TimeElapsed="timeElapsed"></DisplaySummary>
+    <KSSwitch KSMode=KSMode KSModeChanged="@OnKSModeChanged"></KSSwitch>
 
     <div class="my-3" style="font-size: 128px">
         @if (questionType == "Pitch2Image")
         {
-            @answer.Keysignature
+            @(KSMode ? answer.Solfege : answer.Keysignature)
         }
         else if (questionType == "Image2Pitch")
         {
@@ -41,7 +42,7 @@ else
             }
             else if (questionType == "Image2Pitch")
             {
-                @note.Keysignature
+                @(KSMode ? note.Solfege : note.Keysignature)
             }
         </div>
     }
@@ -60,7 +61,7 @@ else
                 foreach (var note in thisRound)
                 {
                     <div class="d-inline-block">
-                        <span class="fw-bolder fs-5">@note.Keysignature</span> <img src="note/@(note.Image).svg" />
+                        <span class="fw-bolder fs-5">@(KSMode ? note.Solfege : note.Keysignature)</span> <img src="note/@(note.Image).svg" />
                     </div>
                 }
             }
@@ -73,7 +74,7 @@ else
     
 }
 
-<div class="mt-5 text-secondary">Last Update Date: 2024-01-06</div>
+<div class="mt-5 text-secondary">Last Update Date: 2024-01-21</div>
 
 @code {
     private Note[]? notes;
@@ -88,6 +89,7 @@ else
     private System.Timers.Timer timer;
     private int QuesGroup { get; set; }
     private LinkNote QuesType3Setting { get; set; } = new LinkNote { };
+    private bool KSMode { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -114,7 +116,8 @@ else
             previousAnswerCorrect = false;
             if (questionType == "Image2Pitch")
             {
-                previousAnswer = $"This Note is {answer.Keysignature}";
+                var correctAnswer = KSMode ? answer.Solfege : answer.Keysignature;
+                previousAnswer = $"This Note is {correctAnswer}";
             }
             else if (questionType == "Pitch2Image")
             {
@@ -197,5 +200,10 @@ else
         public string? Direction { get; set; }
         public string? AnswerSide { get; set; }
 
+    }
+
+    private void OnKSModeChanged(bool newValue)
+    {
+        KSMode = newValue;
     }
 }

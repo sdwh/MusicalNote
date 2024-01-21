@@ -15,7 +15,7 @@ else
     foreach (var group in notes.Where(i => i.Group == 2).OrderBy(i => i.Absolute).GroupBy(i => i.Keysignature))
     {
         <div>
-            <div class="bg-primary text-white fs-5 rounded-2">Bass Clef | @group.Key</div>
+            <div class="border border-primary border-2 text-dark fs-5 rounded-2">Bass Clef | @group.Key ↔ @group.FirstOrDefault().Solfege</div>
             @foreach (var img in group)
             {
             <img src="note/@(img.Image).svg" />    
@@ -27,7 +27,7 @@ else
     foreach (var group in notes.Where(i => i.Group == 6).OrderBy(i => i.Absolute).GroupBy(i => i.Keysignature))
     {
         <div>
-            <div class="bg-success text-white fs-5  rounded-2">Tenor Clef | @group.Key</div>
+            <div class="border border-success border-2 text-dark fs-5  rounded-2">Tenor Clef | @group.Key ↔ @group.FirstOrDefault().Solfege</div>
             @foreach (var img in group)
             {
                 <img src="note/@(img.Image).svg" />
@@ -39,7 +39,7 @@ else
     foreach (var group in notes.Where(i => i.Group == 5).OrderBy(i => i.Absolute).GroupBy(i => i.Keysignature))
     {
         <div>
-            <div class="bg-danger text-white fs-5  rounded-2">Treble Clef | @group.Key</div>
+            <div class="border border-danger border-2 text-dark fs-5  rounded-2">Treble Clef | @group.Key ↔ @group.FirstOrDefault().Solfege</div>
             @foreach (var img in group)
             {
                 <img src="note/@(img.Image).svg" />

@@ -1,0 +1,36 @@
+﻿<div>
+    <div class="form-check form-switch d-inline-block">
+        <input class="form-check-input" type="checkbox" role="switch" id="ksswitch" @bind="KSMode">
+        <label class="form-check-label" for="ksswitch">
+            @if (!KSMode)
+            {
+                <span>C, D, E</span>
+            }
+            else
+            {
+                <span>DO, RE, MI</span>
+            }
+        </label>
+    </div>
+</div>
+
+@code {
+    private bool ksMode;
+
+    [Parameter]
+    public bool KSMode
+    {
+        get => ksMode;
+        set
+        {
+            if (ksMode != value)
+            {
+                ksMode = value;
+                KSModeChanged.InvokeAsync(value);
+            }
+        }
+    }
+
+    [Parameter]
+    public EventCallback<bool> KSModeChanged { get; set; }
+}
